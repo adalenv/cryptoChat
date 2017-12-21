@@ -100,17 +100,78 @@ app={
 
 (function() {
 
+if (typeof(Storage) !== "undefined") {
+
+    if (localStorage.chatOpen) {
+      if (localStorage.getItem('chatOpen')=='yes') {//if was open
+      	$('.chat-close').html('˅');
+      	$('.chat_title').hide();
+      	$('.select-currency').show();
+       // $('.chat').slideToggle('slow');//open it
+        //console.log(localStorage.getItem('chatOpen'));
+      } else if (localStorage.getItem('chatOpen')=='no')  {
+
+      	$('.chat-close').html('˄');
+      	$('.chat_title').show();
+      	$('.select-currency').hide();
+      }
+      
+  } else {
+      localStorage.chatOpen='no';
+  }
+
+} else {
+    // Sorry! No Web Storage support..
+}
+
+function checkChat(){
+		if (typeof(Storage) !== "undefined") {
+
+	    if (localStorage.chatOpen) {
+	      if (localStorage.getItem('chatOpen')=='yes') {//if was open
+	      	$('.chat-close').html('˅');
+	      	$('.chat_title').hide();
+	      	$('.select-currency').show();
+	       // $('.chat').slideToggle('slow');//open it
+	        //console.log(localStorage.getItem('chatOpen'));
+	      } else if (localStorage.getItem('chatOpen')=='no')  {
+
+	      	$('.chat-close').html('˄');
+	      	$('.chat_title').show();
+	      	$('.select-currency').hide();
+	      }
+	      
+	  } else {
+	      localStorage.chatOpen='no';
+	  }
+
+	} else {
+	    // Sorry! No Web Storage support..
+	}
+}
+
+
+
+
+
+
 
 	$('.chat-close').on('click', function(e) {
-		if ($('.chat-close').html()=='˅') {
-			$('.chat-close').html('˄')
-		} else if($('.chat-close').html()=='˄'){
-			$('.chat-close').html('˅')
-		}
-		$('.chat').slideToggle(300, 'swing');
-		$('.select-currency').toggle();
-		$('.chat_title').toggle();
-		$('.chat-message-counter').fadeToggle(300, 'swing');
+
+		 if (localStorage.getItem('chatOpen')=='no') {
+            localStorage.setItem('chatOpen','yes');
+            $('.chat').slideUp(300, 'swing');
+            checkChat();
+            //console.log('from no to yes');
+          } else if (localStorage.getItem('chatOpen')=='yes') {
+            localStorage.setItem('chatOpen','no');
+            checkChat();
+            $('.chat').slideDown(300, 'swing');
+            //console.log('from yes to no');
+          }
+
+		
+		//$('.chat-message-counter').fadeToggle(300, 'swing');
 
 
 	});
@@ -124,3 +185,4 @@ app={
 	app.function.firstRun(app.var.currency);
 
 }) ();
+
