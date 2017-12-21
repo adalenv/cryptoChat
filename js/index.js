@@ -21,6 +21,7 @@ app={
 			})
 			.done(function(data) {
 				console.log(data);
+				app.var.last_msg_id=data[data.length-1].id;
 				app.function.displayMessages(data,'first_run');
 			})
 			.fail(function() {
@@ -77,6 +78,8 @@ app={
 						'<hr>');
 					}//for end
 
+				$('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
+
 			
 
 		},//display messages end
@@ -84,6 +87,8 @@ app={
 		setCurrency:function(currency){
 			app.var.currency=currency;
 			app.var.last_msg_id='null';
+			app.function.firstRun(app.var.currency);
+			
 		}//setcurrency end
 
 	}
@@ -95,19 +100,26 @@ app={
 
 (function() {
 
-	$('#live-chat header').on('click', function() {
-
-		$('.chat').slideToggle(300, 'swing');
-		$('.chat-message-counter').fadeToggle(300, 'swing');
-
-	});
 
 	$('.chat-close').on('click', function(e) {
+		if ($('.chat-close').html()=='˅') {
+			$('.chat-close').html('˄')
+		} else if($('.chat-close').html()=='˄'){
+			$('.chat-close').html('˅')
+		}
+		$('.chat').slideToggle(300, 'swing');
+		$('.select-currency').toggle();
+		$('.chat_title').toggle();
+		$('.chat-message-counter').fadeToggle(300, 'swing');
 
-		e.preventDefault();
-		$('#live-chat').fadeOut(300);
 
 	});
+
+
+	$('.select-currency').on('change', function() {
+		app.function.setCurrency(this.value );
+	})
+
 
 	app.function.firstRun(app.var.currency);
 

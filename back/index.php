@@ -10,7 +10,7 @@ switch ($function) {
 		$last_msg_id=mysqli_escape_string($con,$_POST['last_msg_id']);
 
 		if ($last_msg_id!='null') {
-			$data=mysqli_query($con,"SELECT * FROM messages WHERE currency ='".$currency."' AND id > '".$last_msg_id."' ");
+			$data=mysqli_query($con,"SELECT * FROM messages WHERE currency ='".$currency."' AND id > '".$last_msg_id."' LIMIT 50 ");
 		} else{
 			$data=mysqli_query($con,"SELECT * FROM messages WHERE currency ='".$currency."' ");
 		}
@@ -25,7 +25,7 @@ switch ($function) {
 	break;
 	case 'first_run':
 		
-		$data=mysqli_query($con,'SELECT * FROM messages WHERE currency ="'.$currency.'" ');
+		$data=mysqli_query($con,'SELECT * FROM messages WHERE currency ="'.$currency.'" LIMIT 50 ');
 
 		while($row =mysqli_fetch_assoc($data))
 		{
