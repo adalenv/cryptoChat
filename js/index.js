@@ -3,9 +3,9 @@
 
 app={
 	var:{
-		user:'wpuser',
+		user:localStorage.getItem('wp_user'),
 		currency:localStorage.getItem('currency'),
-		last_msg_id:'3'
+		last_msg_id:'null',
 	},
 
 	function:{
@@ -111,21 +111,28 @@ app={
 			app.var.last_msg_id='null';
 			localStorage.setItem('currency',currency);
 			app.function.firstRun(app.var.currency);
+			$('.c_price_val').html($('.select-currency [value="'+currency+'"]').attr('data-price_atr'));
+			$('.c_percent_val').html($('.select-currency [value="'+currency+'"]').attr('data-percent_atr'));
 
 			
 		},//setcurrency end
 		getFromMarketCap:function(){
 			$.ajax({
-				url: 'https://api.coinmarketcap.com/v1/ticker/?limit=30',
+				url: 'https://api.coinmarketcap.com/v1/ticker/?limit=20000',
 				type: 'GET',
 				dataType: 'json',
 				//data: {param1: 'value1'},
 			})
 			.done(function(data) {
 				for (var i = 0 ; i < data.length; i++) {
-					$('.select-currency').append('<option value="'+data[i].id+'">'+data[i].name+'</option>')
+					$('.select-currency').append('<option data-price_atr="'+data[i].price_usd+'" data-percent_atr="'+data[i].percent_change_24h+'"   value="'+data[i].id+'">'+data[i].name+'</option>')
 				}
 				$('.select-currency').val(app.var.currency);
+				$('.select-currency').select2({
+					placeholder:app.var.currency,
+				});
+
+
 
 			})
 			.fail(function() {
@@ -143,10 +150,19 @@ app={
 
 (function() {
 
+app.function.getFromMarketCap();
+
 if (typeof(Storage) !== "undefined") {
 
 if (localStorage.getItem('currency')==null) {
 	app.var.currency='bitcoin';
+};
+
+
+
+if (localStorage.getItem('wp_user')==null) {
+	localStorage.setItem('wp_user','guest'+Math.floor(1000 + Math.random() * 9000));
+	app.var.user=localStorage.getItem('wp_user');
 };
 
 checkChat();
@@ -164,6 +180,7 @@ function checkChat(){
 	      	$('.chat-close').html('˅');
 	      	$('.chat_title').hide();
 	      	$('.select-currency').show();
+	      	$('.select2-container').show()
 	      	$('.chat').show();
 	        //$('.chat').slideUp('slow');//open it
 	        //console.log(localStorage.getItem('chatOpen'));
@@ -172,6 +189,7 @@ function checkChat(){
 	      	$('.chat-close').html('˄');
 	      	$('.chat_title').show();
 	      	$('.select-currency').hide();
+	      	$('.select2-container').hide();
 	      	//$('.chat').slideDown('slow');//open it
 	      	$('.chat').hide();
 	      }
@@ -208,9 +226,10 @@ function checkChat(){
 
 	$('.select-currency').on('change', function() {
 		app.function.setCurrency(this.value );
+		// $('.select-currency').attr('size', '1');
 	})
 
-	app.function.getFromMarketCap();
+
 	app.function.firstRun(app.var.currency);
 
 	setInterval(function(){
@@ -227,5 +246,6 @@ function checkChat(){
 	});
 
 
-}) ();
 
+
+}) ();

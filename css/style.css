@@ -169,7 +169,7 @@ p { margin: 0; }
     padding: 0;
     margin: 0;
     border: 1px solid #ccc;
-    width: 120px;
+    width: 200px;
     border-radius: 3px;
     overflow: hidden;
     background-color: #fff;
@@ -193,6 +193,40 @@ p { margin: 0; }
     outline: none;
 }
 
-.select-currency{
+.select-currency {
 	display: none;
+}
+.select2-container{
+	display: none;
+}
+.div-head{
+	color: blue;
+	opacity: 0.5;
+    background: #2933397a;
+    position: absolute;
+    width: 294px;
+    height: 24px;
+    padding-left: 3px;
+    padding-right: 3px; 
+    font-size: small;
+    font-weight: bold;
+}
+.c_price{
+	display: inline;
+	float: left;
+	width: 40%;
+	padding-left:10px;
+}
+.c_percent{
+	display: inline;
+}
+
+
+
+.c_price_val{
+	display: inline;
+}
+
+.c_percent_val{
+	display: inline;
 }
