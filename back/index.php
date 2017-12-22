@@ -34,6 +34,9 @@ switch ($function) {
 		 echo(json_encode($json));
 
 		break;
+	case 'send_message':
+		$send=mysqli_query($con,"INSERT INTO messages(`user`,`text`,`currency`) VALUES ('".$_POST['user']."','".$_POST['message']."','".$_POST['currency']."' )");
+	break;
 	
 	default:
 		# code...
