@@ -138,6 +138,7 @@ p { margin: 0; }
 
 .chat {
 	background: #fff;
+	display: none;
 }
 
 .chat-history {
@@ -190,4 +191,8 @@ p { margin: 0; }
 
 .select-style select:focus {
     outline: none;
+}
+
+.select-currency{
+	display: none;
 }
