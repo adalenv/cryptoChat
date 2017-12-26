@@ -18,7 +18,6 @@ CREATE TABLE `messages` (
   `user` varchar(30) NOT NULL,
   `text` text NOT NULL,
   `currency` varchar(30) NOT NULL,
-  `avatar` text,
   `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
