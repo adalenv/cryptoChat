@@ -1,6 +1,6 @@
 //made by Adalen VLADI
 
-
+back_url='/cryptoChat/back/index.php';
 app={
 	var:{
 		user:localStorage.getItem('wp_user'),
@@ -11,12 +11,12 @@ app={
 	function:{
 		firstRun:function(currency){
 			$.ajax({
-				url: 'back/',
+				url: back_url,
 				type: 'POST',
 				dataType: 'json',
 				data: {
 					currency: currency,
-					function:'first_run'
+					function:'first_run' 
 				}
 			})
 			.done(function(data) {
@@ -33,7 +33,7 @@ app={
 
 		getMessages:function(currency){
 			$.ajax({
-				url: 'back/',
+				url: back_url,
 				type: 'POST',
 				dataType: 'json',
 				data: {
@@ -90,7 +90,7 @@ app={
 		},//display messages end
 		sendMessage:function(){
 			$.ajax({
-				url: 'back/',
+				url: back_url,
 				type: 'POST',
 				data: {
 					user: app.var.user,
