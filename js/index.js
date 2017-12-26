@@ -44,10 +44,10 @@ app={
 			})
 			.done(function(data) {
 				if(typeof data !== 'undefined' && data.length >0){
-					console.log(data);
+					//console.log(data);
 					app.var.last_msg_id=data[data.length-1].id;
 					app.function.displayMessages(data,'new');
-					console.clear();
+					//console.clear();
 				}
 			})
 			.fail(function() {
@@ -61,9 +61,12 @@ app={
 							
 	
 					for (var i = 0; i < data.length; i++) {
-						$('.chat-history').append('<div class="chat-message clearfix">'+
-								
-								'<img src="'+data[i].avatar+'" alt="" width="32" height="32">'+
+
+						if (toString(data[i].user)==app.var.user) {
+							console.log(data[i].user);
+							$('#msg_id'+data[i].id).find('h5').css('float','right');
+						}
+						$('.chat-history').append('<div class="chat-message clearfix" id="msg_id'+data[i].id+'">'+
 
 								'<div class="chat-message-content clearfix">'+
 									
@@ -112,7 +115,12 @@ app={
 			localStorage.setItem('currency',currency);
 			app.function.firstRun(app.var.currency);
 			$('.c_price_val').html($('.select-currency [value="'+currency+'"]').attr('data-price_atr'));
-			$('.c_percent_val').html($('.select-currency [value="'+currency+'"]').attr('data-percent_atr'));
+			$('.c_percent_val').html($('.select-currency [value="'+currency+'"]').attr('data-percent_atr')+'%');
+			if ($('.select-currency [value="'+app.var.currency+'"]').attr('data-percent_atr') <0) {
+					$('.c_percent_val').css('color','#e62727');
+				} else{
+					$('.c_percent_val').css('color','#1a8a34');
+				}
 
 			
 		},//setcurrency end
@@ -131,6 +139,14 @@ app={
 				$('.select-currency').select2({
 					placeholder:app.var.currency,
 				});
+				$('.c_price_val').html($('.select-currency [value="'+app.var.currency+'"]').attr('data-price_atr'));
+				$('.c_percent_val').html($('.select-currency [value="'+app.var.currency+'"]').attr('data-percent_atr')+'%');
+
+				if ($('.select-currency [value="'+app.var.currency+'"]').attr('data-percent_atr') <0) {
+					$('.c_percent_val').css('color','#e62727');
+				} else{
+					$('.c_percent_val').css('color','#1a8a34');
+				}
 
 
 
@@ -165,6 +181,11 @@ if (localStorage.getItem('wp_user')==null) {
 	app.var.user=localStorage.getItem('wp_user');
 };
 
+ if (localStorage.getItem('chatOpen')==null){
+ 	localStorage.setItem('chatOpen','no');
+ }
+
+
 checkChat();
 
 
@@ -180,7 +201,7 @@ function checkChat(){
 	      	$('.chat-close').html('˅');
 	      	$('.chat_title').hide();
 	      	$('.select-currency').show();
-	      	$('.select2-container').show()
+	      	$('.select-div').show()
 	      	$('.chat').show();
 	        //$('.chat').slideUp('slow');//open it
 	        //console.log(localStorage.getItem('chatOpen'));
@@ -189,7 +210,7 @@ function checkChat(){
 	      	$('.chat-close').html('˄');
 	      	$('.chat_title').show();
 	      	$('.select-currency').hide();
-	      	$('.select2-container').hide();
+	      	$('.select-div').hide();
 	      	//$('.chat').slideDown('slow');//open it
 	      	$('.chat').hide();
 	      }
@@ -231,6 +252,7 @@ function checkChat(){
 
 
 	app.function.firstRun(app.var.currency);
+
 
 	setInterval(function(){
 		app.function.getMessages(app.var.currency);

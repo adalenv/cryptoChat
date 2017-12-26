@@ -151,14 +151,8 @@ p { margin: 0; }
 	margin: 16px 0;
 }
 
-.chat-message img {
-	border-radius: 50%;
-	float: left;
-}
 
-.chat-message-content {
-	margin-left: 56px;
-}
+
 
 .chat-time {
 	float: right;
@@ -196,12 +190,11 @@ p { margin: 0; }
 .select-currency {
 	display: none;
 }
-.select2-container{
+.select-div{
 	display: none;
 }
 .div-head{
-	color: blue;
-	opacity: 0.5;
+	color: #293339;
     background: #2933397a;
     position: absolute;
     width: 294px;
@@ -225,6 +218,7 @@ p { margin: 0; }
 
 .c_price_val{
 	display: inline;
+	color: #3875d7;
 }
 
 .c_percent_val{
