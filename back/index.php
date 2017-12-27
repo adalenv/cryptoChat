@@ -1,6 +1,7 @@
 <?php 
-$con=mysqli_connect("127.0.0.1", "root", "", "cryptoChat");
-
+//$con=mysqli_connect("127.0.0.1", "root", "", "cryptoChat");
+//mysql://b263242d2fbadb:44724764@eu-cdbr-west-01.cleardb.com/heroku_d9ce1e6a65a0ced?reconnect=true
+$con=mysqli_connect("eu-cdbr-west-01.cleardb.com/heroku_d9ce1e6a65a0ced?reconnect=true", "b263242d2fbadb", "44724764", "heroku_d9ce1e6a65a0ced");
 $function=mysqli_real_escape_string($con,$_POST['function']);
 $currency=mysqli_escape_string($con,$_POST['currency']);
 $json=array();
