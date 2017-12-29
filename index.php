@@ -1,4 +1,4 @@
- <meta charset="UTF-8">
+  <meta charset="UTF-8">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -565,11 +565,6 @@ app={
                             
     
                     for (var i = 0; i < data.length; i++) {
-
-                        if (toString(data[i].user)==app.var.user) {
-                            console.log(data[i].user);
-                           // $('#msg_id'+data[i].id).find('h5').css('float','right');
-                        }
                         $('.chat-history').append('<div class="chat-message clearfix" style="background:'+stringToColour(data[i].user)+'26'+'" id="msg_id'+data[i].id+'">'+
 
                                 '<div class="chat-message-content clearfix">'+
@@ -764,23 +759,34 @@ function checkChat(){
         app.function.getMessages(app.var.currency);
        // console.clear();
 
-    },1000); 
+    },3000); 
 
     $('.message-text').keypress(function (e) {
+
       if (e.which == 13 && $('.message-text').val().length >0) {
-            setTimeout(function(){
-                
-            },60);
+            e.preventDefault();
             app.function.sendMessage();
+
         return false;    //<---- Add this line
+    setInterval(function(){ 
+
+
+    },1000); 
+ 
+      } else if(e.which == 13 && $('.message-text').val().length <1) {
+        e.preventDefault();
       }
+
+
     });
 
     $('.send_message_btn').on('click',function(){
-        setTimeout(function(){
-            
-        },60);
+        
         app.function.sendMessage();
+            setInterval(function(){ 
+
+
+    },1000); 
         $('.message-text').focus();
     });
 
