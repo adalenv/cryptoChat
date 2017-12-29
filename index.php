@@ -1,4 +1,4 @@
-  <meta charset="UTF-8">
+ <meta charset="UTF-8">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,7 +28,7 @@ p { margin: 0; }
 /* ---------- LIVE-CHAT ---------- */
 
 #live-chat {
-    z-index: 10;;
+    z-index:10;
     bottom: 0;
     font-size: 12px;
     right: 24px;
@@ -53,13 +53,8 @@ p { margin: 0; }
     width: 8px;
 }
 
-#live-chat h4 {
-    font-size: 12px;
-}
 
-#live-chat h5 {
-    font-size: 10px;
-}
+
 
 #live-chat form {
     padding: 24px;
@@ -70,7 +65,7 @@ p { margin: 0; }
     border-radius: 3px;
     padding: 8px;
     outline: none;
-    width: 234px;
+    width:223px;
 }
 
 
@@ -237,13 +232,7 @@ p { margin: 0; }
     width: 8px;
 }
 
-#live-chat h4 {
-    font-size: 12px;
-}
 
-#live-chat h5 {
-    font-size: 10px;
-}
 
 #live-chat form {
     padding: 24px;
@@ -254,7 +243,7 @@ p { margin: 0; }
     border-radius: 3px;
     padding: 8px;
     outline: none;
-    width: 234px;
+    width:223px;
 }
 
 
@@ -391,15 +380,26 @@ p { margin: 0; }
         border-radius: 0  !important;
     }
     #live-chat input[type="text"]{
-        width: 100%;
+        width: 90%;
     }
 
 }
 
+.chat-message-content h5{
+    font-size: 15px;
+    color:black;
+    margin: 0 0 5px;
+}
+.chat-message-content p {
+    color: black;
+    font-size: 12px
+}
 
+.chat_title{
+    color: white;
+}
 
-
-      </style>
+</style>
 
  
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700">
@@ -407,7 +407,7 @@ p { margin: 0; }
 
 
     <div id="live-chat">
-        
+         
         <header class="clearfix" id="header-top">
             
             <a href="#" class="chat-close">˅</a>
@@ -453,7 +453,7 @@ p { margin: 0; }
                 <fieldset>
                     
                     <input type="text" class="message-text" placeholder="Type your message and press enter…" autofocus>
-                    <input type="hidden">
+                     <img style="height: 25px;width: 25px" class="send_message_btn" src="http://www.centralpostmedia.com/wp-content/uploads/2016/06/Open-3.png">
 
                 </fieldset>
 
@@ -490,10 +490,10 @@ p { margin: 0; }
   
   
 
-    <script >
-        //made by Adalen VLADI
+<script >
+//made by Adalen VLADI
 
-back_url='/cryptoChat/back/index.php';
+back_url='/cryptoChat/back/';
 app={
     var:{
 
@@ -558,7 +558,7 @@ app={
                 console.log("error");
             })
             
-        },//getMessage end
+        },//getMessage end 
 
         displayMessages:function(data,type){
 
@@ -568,9 +568,9 @@ app={
 
                         if (toString(data[i].user)==app.var.user) {
                             console.log(data[i].user);
-                            $('#msg_id'+data[i].id).find('h5').css('float','right');
+                           // $('#msg_id'+data[i].id).find('h5').css('float','right');
                         }
-                        $('.chat-history').append('<div class="chat-message clearfix" id="msg_id'+data[i].id+'">'+
+                        $('.chat-history').append('<div class="chat-message clearfix" style="background:'+stringToColour(data[i].user)+'26'+'" id="msg_id'+data[i].id+'">'+
 
                                 '<div class="chat-message-content clearfix">'+
                                     
@@ -582,9 +582,8 @@ app={
 
                                 '</div> '+
 
-                            '</div>'+
-
-                        '<hr>');
+                            '</div>'
+                            );
                     }//for end
 
                 $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
@@ -593,23 +592,25 @@ app={
 
         },//display messages end
         sendMessage:function(){
-            $.ajax({
-                url: back_url,
-                type: 'POST',
-                data: {
-                    user: app.var.user,
-                    currency:app.var.currency,
-                    message:$('.message-text').val(),
-                    function:'send_message'
-                },
-            })
-            .done(function() {
-                $('.message-text').val('');
-                app.function.getMessages(app.var.currency);
-            })
-            .fail(function() {
-                console.log("error");
-            })
+            if ($('.message-text').val().length>0) {
+                $.ajax({
+                    url: back_url,
+                    type: 'POST',
+                    data: {
+                        user: app.var.user,
+                        currency:app.var.currency,
+                        message:$('.message-text').val(),
+                        function:'send_message'
+                    },
+                })
+                .done(function() {
+                    $('.message-text').val('');
+                    //app.function.getMessages(app.var.currency);
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+            }
             
         },//sendmessage end
 
@@ -629,7 +630,7 @@ app={
             
         },//setcurrency end
         getFromMarketCap:function(){
-            jQuery.ajax({
+            $.ajax({
                 url: 'https://api.coinmarketcap.com/v1/ticker/?limit=20000',
                 type: 'GET',
                 dataType: 'json',
@@ -640,12 +641,6 @@ app={
                     $('.select-currency').append('<option data-price_atr="'+data[i].price_usd+'" data-percent_atr="'+data[i].percent_change_24h+'"   value="'+data[i].id+'">'+data[i].name+'</option>')
                 }
                 $('.select-currency').val(app.var.currency);
-
-                //$(".select-currency").chosen({no_results_text: "Oops, nothing found!"});
-
-                //$('.select-currency').selectize(); 
-            
-
                 $('.c_price_val').html($('.select-currency [value="'+app.var.currency+'"]').attr('data-price_atr'));
                 $('.c_percent_val').html($('.select-currency [value="'+app.var.currency+'"]').attr('data-percent_atr')+'%');
 
@@ -767,18 +762,41 @@ function checkChat(){
 
     setInterval(function(){ 
         app.function.getMessages(app.var.currency);
-        console.clear();
+       // console.clear();
 
-    },1000);
+    },1000); 
 
     $('.message-text').keypress(function (e) {
       if (e.which == 13 && $('.message-text').val().length >0) {
-        app.function.sendMessage();
+            setTimeout(function(){
+                
+            },60);
+            app.function.sendMessage();
         return false;    //<---- Add this line
       }
     });
 
+    $('.send_message_btn').on('click',function(){
+        setTimeout(function(){
+            
+        },60);
+        app.function.sendMessage();
+        $('.message-text').focus();
+    });
 
+
+ stringToColour = function(str) {
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  var colour = '#';
+  for (var i = 0; i < 3; i++) {
+    var value = (hash >> (i * 8)) & 0xFF;
+    colour += ('00' + value.toString(16)).substr(-2);
+  }
+  return colour;
+}
 
 
 }) ();
