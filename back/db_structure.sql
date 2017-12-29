@@ -27,3 +27,5 @@ CREATE TABLE `messages` (
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`);
+  
+ALTER TABLE `messages` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;

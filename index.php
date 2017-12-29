@@ -1,4 +1,4 @@
- <meta charset="UTF-8">
+  <meta charset="UTF-8">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,7 +28,7 @@ p { margin: 0; }
 /* ---------- LIVE-CHAT ---------- */
 
 #live-chat {
-    zd-index:99999999;
+    z-index: 10;;
     bottom: 0;
     font-size: 12px;
     right: 24px;
@@ -212,7 +212,7 @@ p { margin: 0; }
 /* ---------- LIVE-CHAT ---------- */
 
 #live-chat {
-    zd-index:99999999;
+    z-index:10;
     bottom: 0;
     font-size: 12px;
     right: 24px;
@@ -381,17 +381,17 @@ p { margin: 0; }
          border-radius: 0px;
     }
     #live-chat{
-    	width: 100%;
-    	right: 0px;
+        width: 100%;
+        right: 0px;
     }
     .div-head{
-    	width: 100%;
+        width: 100%;
     }
     #live-chat header {
-    	border-radius: 0  !important;
+        border-radius: 0  !important;
     }
     #live-chat input[type="text"]{
-    	width: 100%;
+        width: 100%;
     }
 
 }
@@ -629,7 +629,7 @@ app={
             
         },//setcurrency end
         getFromMarketCap:function(){
-            $.ajax({
+            jQuery.ajax({
                 url: 'https://api.coinmarketcap.com/v1/ticker/?limit=20000',
                 type: 'GET',
                 dataType: 'json',
@@ -765,14 +765,14 @@ function checkChat(){
     app.function.firstRun(app.var.currency);
 
 
-    setInterval(function(){
+    setInterval(function(){ 
         app.function.getMessages(app.var.currency);
-        //console.clear();
+        console.clear();
 
     },1000);
 
     $('.message-text').keypress(function (e) {
-      if (e.which == 13 && $('.message-text').val().length >1) {
+      if (e.which == 13 && $('.message-text').val().length >0) {
         app.function.sendMessage();
         return false;    //<---- Add this line
       }
